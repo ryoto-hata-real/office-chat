@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block customcss %}
+<link rel="stylesheet" type="text/css" href="{% static 'list_style.css' %}">
+{% endblock %}
+
+
+{% block header %}
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+  <h4 class="my-0 mr-md-auto font-weight-normal">Office Chat</h4>
+  <nav class="my-2 my-md-0 mr-md-3">
+    <a class="p-2 text-dark" href="{% url 'logout' %}">logout</a>
+  </nav>
+  <a class="btn btn-outline-primary" href="{% url 'signup' %}">Create New Account</a>
+</div>
+
+{% endblock header %}
+
+
+{% block content %}
+<div class="container">
+<a href="{% url 'create' %}" class="btn btn-success float-right">新規投稿</a>
+<div class="my-3 p-3 bg-white rounded shadow-sm">
+    <h6 class="border-bottom border-gray pb-2 mb-0">Recent updates</h6>
+    {% for item in object_list %}
+    
+    <div class="media text-muted pt-3 {% if user.username in item.readtext %}bg-read{%endif%} ">
+    <svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect width="100%" height="100%" fill="#e83e8c"/><text x="50%" y="50%" fill="#e83e8c" dy=".3em">32x32</text></svg>
+      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <strong class="d-block text-gray-dark">{{ item.author }}:  <a href="{% url 'detail' item.pk %}">{{ item.title }}</a></strong>
+        
+        {{ item.content }}
+      </p>
+      <a class="btn btn-primary btn-sm" href="{% url 'good' item.pk %}" role="button">いいね！: {{item.good}}</a>
+      <a class="btn btn-secondary btn-sm active" href="{% url 'read' item.pk %}" role="button">既読: {{item.read}}</a>
+
+    </div>
+    {% endfor %}
+</div>
+{% endblock content %}

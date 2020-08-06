@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block customcss %}
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+{% endblock %}
+{% block header %}
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+  <h4 class="my-0 mr-md-auto font-weight-normal">Office Chat</h4>
+  <nav class="my-2 my-md-0 mr-md-3">
+    <a class="p-2 text-light btn-primary btn" href="{% url 'login' %}">login</a>
+  </nav>
+</div>
+{% endblock %}
+{% block content %}
+<body class="text-center">
+    <form class="form-signin" method="POST" action="">
+    {% csrf_token %}
+ 
+  <img class="mb-4" src="/docs/4.5/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+  <h1 class="h3 mb-3 font-weight-normal">Please sign up</h1>
+  <label for="inputEmail" class="sr-only">user name</label>
+  <input type="text" id="inputEmail" class="form-control" name="username" placeholder="Email address" required autofocus>
+  <label for="inputPassword" class="sr-only">Password</label>
+  <input type="password" id="inputPassword" class="form-control" name="password" placeholder="Password" required>
+
+  <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    {% if error %}
+    <div class="alert alert-danger" role="alert">{{ error }}</div>
+    {% endif %}
+  <p class="mt-5 mb-3 text-muted">&copy; 2017-2020</p>
+</form>
+
+{% endblock %}

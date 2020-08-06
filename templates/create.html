@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block header %}
+{% if user is authenticated %}
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+  <h4 class="my-0 mr-md-auto font-weight-normal">Office Chat　:　新規作成</h4>
+  <nav class="my-2 my-md-0 mr-md-3">
+    <a class="p-2 text-dark" href="{% url 'logout' %}">logout</a>
+    <a class="p-2 text-dark" href="{% url 'list' %}">投稿一覧</a>
+  </nav>
+  <a class="btn btn-outline-primary" href="{% url 'signup' %}">Create New Account</a>
+{% else %}
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+  <h4 class="my-0 mr-md-auto font-weight-normal">Office Chat</h4>
+  <nav class="my-2 my-md-0 mr-md-3">
+    <a class="p-2 text-dark btn btn-outline-secondary" href="{% url 'login' %}">login</a>
+  </nav>
+  <a class="btn btn-outline-primary" href="{% url 'signup' %}">signup</a>
+</div>
+{% endif %}
+
+{% endblock header %}
+{% block content %}
+{% if user is authenticated %}
+<div class="alert alert-success" role="alert">
+<form action="" method="POST" enctype="multipart/form-data">
+{% csrf_token %}
+<p><small>タイトル　<input type='text' name="title"></p>
+<p>本文　<br><textarea name="content" rows="4" cols="70"></textarea></p>
+<p>画像を選択 <input type='file' name="images"></p>
+<p><input type="hidden" name="author" value="{{ user.username }}"></p>
+</small>
+<hr>
+<input class="btn btn-primary" type="submit" value="作成する">
+<a href="{% url 'list' %}" class="btn btn-success">投稿一覧へ</a>
+</form>
+</div>
+{% else %}
+ログインしてください
+{% endif %}
+{% endblock  %}

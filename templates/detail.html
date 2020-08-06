@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block header %}
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+  <h4 class="my-0 mr-md-auto font-weight-normal">Office Chat　:　投稿詳細</h4>
+  <nav class="my-2 my-md-0 mr-md-3">
+    <a class="p-2 text-dark" href="{% url 'logout' %}">logout</a>
+  </nav>
+  <a class="btn btn-outline-primary" href="{% url 'signup' %}">Create New Account</a>
+</div>
+
+{% endblock header %}
+
+{% block content %}
+<div class="container">
+<div class="alert alert-info" role="alert">
+        <h4 class="alert-heading"><strong class="d-block text-gray-dark">{{ object.title }}</strong></h4>
+        <p><strong class="d-block text-gray-dark">投稿者：{{ object.author }}</strong></p>
+        <hr>
+        <p>{{ object.content }}</p>
+        {% if object.images %}
+            <p><img src="{{object.images.url}}" width="300"></p>
+        {% endif %}
+      <a class="btn btn-primary btn-sm" href="{% url 'good' object.pk %}" role="button">いいね！: {{object.good}}</a>
+      <a class="btn btn-primary btn-sm" href="{% url 'read' object.pk %}" role="button">既読: {{object.read}}</a>
+
+    </div>
+</div>
+{% endblock %}
